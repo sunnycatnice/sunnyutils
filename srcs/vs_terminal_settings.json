@@ -1,0 +1,6 @@
+{
+    "_comment" : "SunnyUpdate",
+	"terminal.integrated.fontFamily": "MesloLGS NF",
+    "terminal.extern.linuxExec": "iterm2",
+    "editor.inlineSuggest.enabled": true
+}

@@ -1,0 +1,16 @@
+~/Library/Caches/*
+~/Library/Application\ Support/Code/User/*
+~/Library/Application\ Support/Code/CachedExtensionVSIXs/*
+~/Library/Application\ Support/Code/Cache/*
+~/Library/Application\ Support/Code/CachedData/*
+~/Library/Application\ Support/Slack/Service\ Worker/CacheStorage/*
+~/Library/Application\ Support/Google/Chrome/Default/Service\ Worker/CacheStorage/*
+~/Library/Application\ Support/Slack/Service\ Worker/CacheStorage/*
+~/Library/Application\ Support/com.operasoftware.OperaGX/Service Worker/CacheStorage/*
+~/Library/Application\ Support/Slack/Cache/*
+~/Library/Application\ Support/Telegram\ Desktop/tdata
+~/Library/Application\ Support/com.operasoftware.OperaGX/Service\ Worker/CacheStorage/*
+~/Library/Application\ Support/Code/User/workspaceStorage/*
+~/Library/Application\ Support/Code/CachedExtensionVSIXs/*
+~/aaa/*
+~/Library/Caches/vscode-cpptools/ipch/*

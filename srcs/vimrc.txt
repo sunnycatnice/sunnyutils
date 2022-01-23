@@ -1,0 +1,25 @@
+"my default
+syntax on
+set number
+set mouse=a
+set autoindent
+set cindent
+
+"from others
+set showmatch
+set colorcolumn=80
+set cursorline
+filetype plugin indent on
+set hidden          "mantiene il buffer anche dopo aver salvato
+set tabstop=4
+
+nnoremap <F5> :!gcc -Wall -Wextra -Werror %:t -o %:r.out && ./%:r.o    ut<enter>
+nmap <F6> :NERDTreeToggle<CR>
+
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
