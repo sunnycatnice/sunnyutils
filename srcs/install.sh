@@ -136,5 +136,5 @@ function finish() {
 # check_vscode_font
 # set_p10k_config
 # check_p10k_configuration_wizard
-# check_vscode_font
+check_vscode_font
 finish
