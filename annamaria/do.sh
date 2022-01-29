@@ -1,4 +1,9 @@
 #!bin/zsh
+
+#/*
+# Simple script to hide a folder zipped with password in a specified location
+#*/
+
 START_DIR="$PWD"
 END_DIR="/goinfre"
 TESTDIR_NAME=".test1"
@@ -10,8 +15,7 @@ ZIP_NAME_DOT_ZIP="$ZIP_NAME.zip"
 ZIP_PATH="$HOME/Desktop/$ZIP_NAME_DOT_ZIP"
 
 function change_time_single_file() {
-	touch -t 202001101125 $1
-	#does not work here
+	touch -t 06011102 $1
 	echo "Time changed for $1"
 }
 
@@ -35,9 +39,7 @@ rm -rf $TESTDIR_NAME || true
 echo "rm -rf $TESTDIR_NAME"
 mkdir $TESTDIR_NAME
 echo "mkdir $TESTDIR_NAME"
-change_time_single_file $TESTDIR_NAME
 cd $TESTDIR_NAME
-change_time_single_file $SUBFOLDER_NAME
 rm -rf $SUBFOLDER_NAME || true
 echo "rm -rf $SUBFOLDER_NAME"
 mkdir $SUBFOLDER_NAME
@@ -49,5 +51,6 @@ apply_to_every_subfolder $PWD
 #find . -type f -exec touch -t 202001101125 {} \;
 cp $ZIP_PATH .
 cd $START_DIR
-history -c
+change_time_single_file $END_DIR/$TESTDIR_NAME
+change_time_single_file $END_DIR/$TESTDIR_NAME/$SUBFOLDER_NAME
 exec zsh
