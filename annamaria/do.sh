@@ -1,12 +1,18 @@
 #!bin/zsh
 START_DIR="$PWD"
+END_DIR="/goinfre"
 TESTDIR_NAME=".test1"
 SUBFOLDER_NAME=".02"
-TOCPY_DIRNAME=".t02"
+TOCPY_DIRNAME=".t2"
+ZIP_NAME="zip"
 CP_DIRPATH="$HOME/Desktop/$TOCPY_DIRNAME"
+ZIP_NAME_DOT_ZIP="$ZIP_NAME.zip"
+ZIP_PATH="$HOME/Desktop/$ZIP_NAME_DOT_ZIP"
 
 function change_time_single_file() {
 	touch -t 202001101125 $1
+	#does not work here
+	echo "Time changed for $1"
 }
 
 #function to apply change_time_single_file recursively
@@ -19,49 +25,29 @@ function apply_to_every_subfolder() {
 	done
 }
 
-
-# function apply_to_every_subfolder() {
-#     #for every subfolder in the current folder
-#     for subfolder in $1; do
-#         #if this element is a folder, then call this function again
-#         if [ -d "${subfolder}" ]; then
-#             cd "${subfolder}"
-#             echo subfolder: "${subfolder}"
-#             apply_to_every_subfolder $1
-#             cd ..
-#         else
-#             #if this element is a file, then change the time
-#             echo file: "${subfolder}"
-#             #change_time_single_file "${subfolder}"
-#         fi
-#     done
-# }
-
 echo $START_DIR
-cd /goinfre
-if [ -d $TESTDIR_NAME ]
-then
-	echo $TESTDIR_NAME present
-else
-	echo $TESTDIR_NAME creating it
-	mkdir $TESTDIR_NAME
-fi
+cd $CP_DIRPATH
+echo "cd $CP_DIRPATH"
+cd ..
+zip -er $ZIP_NAME_DOT_ZIP $CP_DIRPATH
+cd $END_DIR
+rm -rf $TESTDIR_NAME || true
+echo "rm -rf $TESTDIR_NAME"
+mkdir $TESTDIR_NAME
+echo "mkdir $TESTDIR_NAME"
 change_time_single_file $TESTDIR_NAME
 cd $TESTDIR_NAME
 change_time_single_file $SUBFOLDER_NAME
-if [ -d $SUBFOLDER_NAME ]
-then
-	echo $SUBFOLDER_NAME present
-else
-	echo $SUBFOLDER_NAME creating it
-	mkdir $SUBFOLDER_NAME
-fi
-cd $SUBFOLDER_NAME
-cp -R $CP_DIRPATH .
+rm -rf $SUBFOLDER_NAME || true
+echo "rm -rf $SUBFOLDER_NAME"
+mkdir $SUBFOLDER_NAME
+echo "mkdir $SUBFOLDER_NAME"
+cd $PWD/$SUBFOLDER_NAME
 
 apply_to_every_subfolder $PWD
 #touch -t 202001101125 . every file and folder starting from .
 #find . -type f -exec touch -t 202001101125 {} \;
+cp $ZIP_PATH .
 cd $START_DIR
 history -c
 exec zsh
