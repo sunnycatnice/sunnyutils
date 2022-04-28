@@ -16,4 +16,6 @@ rm -rf ~/Library/Application\ Support/Code/User/workspaceStorage/*
 rm -rf ~/Library/Application\ Support/Code/CachedExtensionVSIXs/*
 rm -rf ~/aaa/*
 rm -rf ~/Library/Caches/vscode-cpptools/ipch/*
+rm -rf ~/Library/Containers/*
+
 

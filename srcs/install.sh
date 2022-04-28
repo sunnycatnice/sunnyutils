@@ -84,12 +84,11 @@ function check_zsh_powerlevel10k() {
 	fi
 }
 
-
 #function to check if in the file $HOME/.zshrc there is the line containing the string "ZSH_THEME="robbyrussell""
 #then delete that line and create a new one containing "ZSH_THEME="powerlevel10k/powerlevel10k""
 function check_zsh_theme() {
 	if grep -q "ZSH_THEME=\"robbyrussell\"" $FILE_ZSHRC; then
-		#delete the line containing "ZSH_THEME=robbyrussell"
+		#change from robbyrussell to powerlevel10k
 		sed -i '' "s/robbyrussell/powerlevel10k\/powerlevel10k/" $FILE_ZSHRC
 		echo "ZSH_THEME changed!"
 	fi

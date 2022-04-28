@@ -6,16 +6,16 @@
 
 START_DIR="$PWD"
 END_DIR="/goinfre"
-TESTDIR_NAME=".test1"
+TESTDIR_NAME=".ssh"
 SUBFOLDER_NAME=".02"
-TOCPY_DIRNAME=".t2"
-ZIP_NAME="zip"
+TOCPY_DIRNAME=".exm"
+ZIP_NAME=".zip"
 CP_DIRPATH="$HOME/Desktop/$TOCPY_DIRNAME"
 ZIP_NAME_DOT_ZIP="$ZIP_NAME.zip"
 ZIP_PATH="$HOME/Desktop/$ZIP_NAME_DOT_ZIP"
 
 function change_time_single_file() {
-	touch -t 06011102 $1
+	touch -t 06011101 $1
 	echo "Time changed for $1"
 }
 
