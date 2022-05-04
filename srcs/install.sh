@@ -12,6 +12,15 @@ FILE_VIMRC="$HOME/.vimrc"
 FILE_VIMRC_TXT="vimrc.txt"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
 VS_TERMINAL_CONFIG_PATH="$HOME/Library/Application Support/Code/User/settings.json"
+SILENT_MODE=false
+
+function print_silent 
+{
+	#if SILENT_MODE is flase, print the message
+	if [ $SILENT_MODE = false ]; then
+		echo -e "$1"
+	fi
+}
 
 function print_green()
 {
@@ -30,10 +39,25 @@ function print_red
 
 function check_argv()
 {
-	#if $1 exists then set export SUNNY_DISPLAY_STATUS="on"
+	if [ $# -eq 0 ] ; then
+		print_red "No arguments supplied"
+		print_red "Using default mode"
+	fi
+	if [ $# -eq 1 ] ; then
+		for i  in "$@"
+		do
+			#if the argument is -s, set SILENT_MODE to true
+			if [ $i = "-s" ] || [ $i = "--silent"]; then
+				SILENT_MODE=true
+				print_green "Silent mode enabled"
+			fi
+		done
+	else
+		SILENT_MODE=false
+	fi
 }
 
-#funzione to check if vim config is already installed, if not, install it
+#function to check if vim config is already installed, if not, install it
 function check_vimrc()
 {
 	if [ -f $FILE_VIMRC ]; then
@@ -93,6 +117,16 @@ function copy_vimrc()
 			echo $line >> $FILE_VIMRC
 		fi
 	done < $FILE_VIMRC_TXT
+}
+
+function download_ohmyzsh()
+{
+	if [ -d "$HOME/.oh-my-zsh" ]; then
+		echo "Oh-my-zsh already installed!"
+	else
+		sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+		print_green "Oh-my-zsh successfully installed!"
+	fi
 }
 
 #funzione che controlla se ~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions è presente, se non lo è, lo crea
@@ -195,23 +229,27 @@ function check_vscode_font()
 
 function finish()
 {
-	exec zsh
+	print_silent ciao
+	print_silent "zsh configured!"
 	# clear
 	print_bold_green "All done! Enjoy your new shell!"
+	# exec zsh
 }
 
-set_fonts
-check_argv
-check_brew
-check_vimrc
-git_config
-copy_zsh
-copy_vimrc
-check_zsh_autosuggestions
-check_zsh_powerlevel10k
-check_zsh_theme
-check_vscode_font
-set_p10k_config
-check_p10k_configuration_wizard
-check_vscode_font
+#pass every argument to the function check_arg
+check_argv $@
+# set_fonts
+# check_brew
+# check_vimrc
+# git_config
+# download_ohmyzsh
+# copy_zsh
+# copy_vimrc
+# check_zsh_autosuggestions
+# check_zsh_powerlevel10k
+# check_zsh_theme
+# check_vscode_font
+# set_p10k_config
+# check_p10k_configuration_wizard
+# check_vscode_font
 finish
