@@ -45,12 +45,30 @@ function check_vimrc()
 	fi
 }
 
+function check_brew()
+{
+	if [ -d "$HOME/goinfre/.test/.brew" ]; then
+		export PATH="$HOME/goinfre/.test/.brew/bin:$HOME/goinfre/.test/.brew/sbin:$PATH";
+		echo 'export PATH="/goinfre/dmangola/.test/.brew/bin:$PATH"' >> ~/.zshrc
+		echo "Brew path added to zshrc!"
+	else
+		git clone --depth=1 https://github.com/Homebrew/brew ~/goinfre/.test/.brew;
+		export PATH="$HOME/goinfre/.test/.brew/bin:$HOME/goinfre/.test/.brew/sbin:$PATH";
+		print_green "Brew successfully installed and exported!"
+	fi
+
+	if [ "$1" == "init-cask" ]; then
+		echo "export HOMEBREW_CASK_OPTS=\"--appdir=~/goinfre/.Applications --caskroom=~/.goinfre/.test/.brew/Caskroom\"" >> ~/.zshrc
+		echo "cask initialized!"
+	fi
+}
+
 #function to change git config to use the default git config
 function git_config()
 {
 	git config --global user.name "dani-MacOS"
 	git config --global user.email "sio2guanoeleo@gmail.com"
-	print_green "Git configured!"
+	print_green "Git configured/overwritten!"
 }
 
 #funzione che legge linea per linea il file FILE_ZSHRC_TXT e lo copia in FILE_ZSHRC, se la linea è presente nel file FILE_ZSHRC, non fa niente
@@ -151,6 +169,7 @@ function finish()
 }
 
 check_argv
+check_brew "init-cask"
 check_vimrc
 git_config
 copy_zsh
