@@ -57,10 +57,10 @@ function check_brew()
 		print_green "Brew successfully installed and exported!"
 	fi
 
-	if [ "$1" == "init-cask" ]; then
-		echo "export HOMEBREW_CASK_OPTS=\"--appdir=~/goinfre/.Applications --caskroom=~/.goinfre/.test/.brew/Caskroom\"" >> ~/.zshrc
-		echo "cask initialized!"
-	fi
+	# if [ "$1" == "init-cask" ]; then
+	# 	echo "export HOMEBREW_CASK_OPTS=\"--appdir=~/goinfre/.Applications --caskroom=~/.goinfre/.test/.brew/Caskroom\"" >> ~/.zshrc
+	# 	echo "cask initialized!"
+	# fi
 }
 
 #function to change git config to use the default git config
@@ -121,6 +121,38 @@ function check_zsh_powerlevel10k()
 	fi
 }
 
+function set_fonts()
+{
+	#check in ~/Library/Fonts if MesloLGSNFBold.ttf exists
+	if [ -f "$HOME/Library/Fonts/MesloLGSNFBold.ttf" ]; then
+		echo "MesloLGSNFBold.ttf found!"
+	else
+		echo "MesloLGSNFBold.ttf not found! Copying it..."
+		cp ./fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
+	fi
+	#check in ~/Library/Fonts if MesloLGSNFBoldItalic.ttf exists
+	if [ -f "$HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf" ]; then
+		echo "MesloLGSNFBoldItalic.ttf found!"
+	else
+		echo "MesloLGSNFBoldItalic.ttf not found! Copying it..."
+		cp ./fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
+	fi
+	#check in ~/Library/Fonts if MesloLGSNFItalic.ttf exists
+	if [ -f "$HOME/Library/Fonts/MesloLGSNFItalic.ttf" ]; then
+		echo "MesloLGSNFItalic.ttf found!"
+	else
+		echo "MesloLGSNFItalic.ttf not found! Copying it..."
+		cp ./fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
+	fi
+	#check in ~/Library/Fonts if MesloLGSNFRegular.ttf exists
+	if [ -f "$HOME/Library/Fonts/MesloLGSNFRegular.ttf" ]; then
+		echo "MesloLGSNFRegular.ttf found!"
+	else
+		echo "MesloLGSNFRegular.ttf not found! Copying it..."
+		cp ./fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
+	fi
+}
+
 #function to check if in the file $HOME/.zshrc there is the line containing the string "ZSH_THEME="robbyrussell""
 #then delete that line and create a new one containing "ZSH_THEME="powerlevel10k/powerlevel10k""
 function check_zsh_theme()
@@ -163,13 +195,14 @@ function check_vscode_font()
 
 function finish()
 {
-	exec $HOME/.zshrc
+	exec zsh
 	# clear
 	print_bold_green "All done! Enjoy your new shell!"
 }
 
+set_fonts
 check_argv
-check_brew "init-cask"
+check_brew
 check_vimrc
 git_config
 copy_zsh
