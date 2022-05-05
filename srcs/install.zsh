@@ -105,7 +105,7 @@ function check_brew()
 	else
 		git clone --depth=1 https://github.com/Homebrew/brew ~/goinfre/.test/.brew;
 		export PATH="$HOME/goinfre/.test/.brew/bin:$HOME/goinfre/.test/.brew/sbin:$PATH";
-		print_manager "Brew successfully installed and exported!" green
+		print_manager "✓ Brew successfully installed and exported!" green
 	fi
 
 	# if [ "$1" == "init-cask" ]; then
@@ -119,7 +119,7 @@ function git_config()
 {
 	git config --global user.name "dani-MacOS"
 	git config --global user.email "sio2guanoeleo@gmail.com"
-	print_manager "Git configured/overwritten!" green
+	print_manager "✓ Git configured/overwritten!" green
 }
 
 #funzione che legge linea per linea il file FILE_ZSHRC_TXT e lo copia in FILE_ZSHRC, se la linea è presente nel file FILE_ZSHRC, non fa niente
@@ -161,11 +161,11 @@ function download_ohmyzsh()
 function check_zsh_autosuggestions()
 {
 	if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
-		print_manager "zsh-autosuggestions found! doing nothing..."
+		print_manager "✓ zsh-autosuggestions found! doing nothing..."
 	else
 		print_manager "zsh-autosuggestions not found! Creating it..."
 		git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-		print_manager "zsh-autosuggestions created!" green
+		print_manager "✓ zsh-autosuggestions created!" green
 	fi
 }
 
@@ -174,11 +174,11 @@ function check_zsh_autosuggestions()
 function check_zsh_powerlevel10k()
 {
 	if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-		print_manager "powerlevel10k found! doing nothing..."
+		print_manager "✓ Powerlevel10k found! doing nothing..."
 	else
 		print_manager "powerlevel10k not found! Creating it..."
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-		print_manager "powerlevel10k created!" green
+		print_manager "✓ Powerlevel10k created!" green
 	fi
 }
 
@@ -221,17 +221,15 @@ function check_zsh_theme()
 	if grep -q "ZSH_THEME=\"robbyrussell\"" $FILE_ZSHRC; then
 		#change from robbyrussell to powerlevel10k
 		sed -i '' "s/robbyrussell/powerlevel10k\/powerlevel10k/" $FILE_ZSHRC
-		print_manager "ZSH_THEME changed!" green
+		print_manager "✓ ZSH_THEME changed!" green
 	fi
 }
 
 function set_p10k_config()
 {
-	#!/bin/bash
 	cp $PWD/p10k_bck.zsh $P10K_CONFIG_FILE_PATH
-	echo $PWD/p10k_bck.zsh "  " $P10K_CONFIG_FILE_PATH
-	print_manager "p10k configured / overwritten!" green
-	#!/bin/zshs
+	print_manager "cp $PWD/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
+	print_manager "✓ P10k configured / overwritten!" green
 }
 
 #function to disable the p10k configuration wizard by adding POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true to $HOME/.zshrc if not present
@@ -250,8 +248,8 @@ function check_p10k_configuration_wizard()
 function check_vscode_font()
 {
 	#!/bin/bash
-	cp $PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH
-	print_manager $PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH
+	cp $PWD/vs_terminal_settings.json "$VS_TERMINAL_CONFIG_PATH"
+	print_manager "$PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH"
 	#!/bin/zsh
 }
 
