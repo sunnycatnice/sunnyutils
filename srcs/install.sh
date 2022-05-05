@@ -5,6 +5,7 @@ GREEN='\033[0;32m'
 BOLD_GREEN='\033[1;32m'
 RESET_COLOR='\033[0m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 
 FILE_ZSHRC="$HOME/.zshrc"
 FILE_ZSHRC_TXT="zshrc.txt"
@@ -22,9 +23,28 @@ function print_silent
 	fi
 }
 
+function ascii_art()
+{
+	echo " $RED (             $RESET_COLOR /\_/\                               $RED("
+	echo " $RED )\ )         $RESET_COLOR ( o.o ) $GREEN MEOW            $RED )     (  )\ ) "
+	echo " $RED(()/(   (     $RESET_COLOR  > ^ <  $BOLD_GREEN V0.1     $RED (   ( /( (   )\(()/( "
+	echo " $RED /(_)) ))\   (                ) ))\  )\()))\ ((_)/(_))"
+	echo " $RED($RESET_COLOR __ $RED))  /((_)  )\ )   )\ ) (()/(  /((_)(_))/((_) _(_))  "
+	echo " $RESET_COLOR/ __|$RED(_))(  _(_/(  _(_/(  )(_))(_))( $RESET_COLOR| |_  (_)| |/ __| "
+	echo " $RESET_COLOR\__ \| || || ' \))| ' \))| || || || ||  _| | || |\__ \ "
+	echo " $RESET_COLOR|___/ \_,_||_||_| |_||_|  \_,_| \_ _| \__| |_||_||___/ "
+	echo "                           |__/                         "
+
+}
+
 function print_green()
 {
 	echo $GREEN$1$RESET_COLOR
+}
+
+function print_yellow()
+{
+	echo $YELLOW$1$RESET_COLOR
 }
 
 function print_bold_green()
@@ -37,17 +57,18 @@ function print_red
 	echo $RED$1$RESET_COLOR
 }
 
+
 function check_argv()
 {
 	if [ $# -eq 0 ] ; then
-		print_red "No arguments supplied"
-		print_red "Using default mode"
+		print_yellow "No arguments supplied"
+		print_yellow "Using default mode"
 	fi
 	if [ $# -eq 1 ] ; then
 		for i  in "$@"
 		do
 			#if the argument is -s, set SILENT_MODE to true
-			if [ $i = "-s" ] || [ $i = "--silent"]; then
+			if [ $i = "-s" ]  || [ $i = "--silent" ]; then
 				SILENT_MODE=true
 				print_green "Silent mode enabled"
 			fi
@@ -236,20 +257,21 @@ function finish()
 	# exec zsh
 }
 
-#pass every argument to the function check_arg
+
+ascii_art
 check_argv $@
-# set_fonts
-# check_brew
-# check_vimrc
-# git_config
-# download_ohmyzsh
-# copy_zsh
-# copy_vimrc
-# check_zsh_autosuggestions
-# check_zsh_powerlevel10k
-# check_zsh_theme
-# check_vscode_font
-# set_p10k_config
-# check_p10k_configuration_wizard
-# check_vscode_font
+set_fonts
+check_brew
+check_vimrc
+git_config
+download_ohmyzsh
+copy_zsh
+copy_vimrc
+check_zsh_autosuggestions
+check_zsh_powerlevel10k
+check_zsh_theme
+check_vscode_font
+set_p10k_config
+check_p10k_configuration_wizard
+check_vscode_font
 finish
