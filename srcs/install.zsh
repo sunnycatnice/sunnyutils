@@ -1,5 +1,5 @@
 #!/bin/bash
-#DO NOT RUN THIS SCRIPT DIRECTLY, RUN config.sh INSTEAD
+#DO NOT RUN THIS SCRIPT DIRECTLY, RUN config.sh INSTEAD <-- STRONZATA
 
 GREEN='\033[0;32m'
 BOLD_GREEN='\033[1;32m'
@@ -10,7 +10,7 @@ YELLOW='\033[0;33m'
 ARGV=$@
 
 FILE_ZSHRC="$HOME/.zshrc"
-FILE_ZSHRC_TXT="tocopy.zshrc"
+FILE_ZSHRC_TOCOPY="tocopy.zshrc"
 FILE_VIMRC="$HOME/.vimrc"
 FILE_VIMRC_TXT="vimrc.txt"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
@@ -127,7 +127,7 @@ function copy_zsh()
 {
 	#remove any previous .zshrc file
 	rm -rf $FILE_ZSHRC
-	cp $FILE_ZSHRC_TXT ~/.zshrc
+	cp $FILE_ZSHRC_TOCOPY ~/.zshrc
 	print_manager "✓ .zshrc copied!" green
 }
 
@@ -212,17 +212,6 @@ function set_fonts()
 	fi
 }
 
-#function to check if in the file $HOME/.zshrc there is the line containing the string "ZSH_THEME="robbyrussell""
-#then delete that line and create a new one containing "ZSH_THEME="powerlevel10k/powerlevel10k""
-function check_zsh_theme()
-{
-	if grep -q "ZSH_THEME=\"robbyrussell\"" $FILE_ZSHRC; then
-		#change from robbyrussell to powerlevel10k
-		sed -i '' "s/robbyrussell/powerlevel10k\/powerlevel10k/" $FILE_ZSHRC
-		print_manager "✓ ZSH_THEME changed!" green
-	fi
-}
-
 function set_p10k_config()
 {
 
@@ -230,18 +219,6 @@ function set_p10k_config()
 	cp $PWD/tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
 	print_manager "cp $PWD/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
 	print_manager "✓ P10k configured / overwritten!" green
-}
-
-#function to disable the p10k configuration wizard by adding POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true to $HOME/.zshrc if not present
-function check_p10k_configuration_wizard()
-{
-	if grep -q "POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true" $FILE_ZSHRC; then
-		print_manager "POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true found! doing nothing..."
-	else
-		print_manager "POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true not found! Creating it..."
-		echo "POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true" >> $FILE_ZSHRC
-		print_manager "POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true created!"
-	fi
 }
 
 #function to change the default font of vs code to MesloLGS NF
@@ -275,8 +252,6 @@ copy_zsh
 copy_vimrc
 check_zsh_autosuggestions
 check_zsh_powerlevel10k
-check_zsh_theme
 check_vscode_font
 set_p10k_config
-check_p10k_configuration_wizard
 finish
