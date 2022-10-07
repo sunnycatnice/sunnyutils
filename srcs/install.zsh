@@ -10,7 +10,7 @@ YELLOW='\033[0;33m'
 ARGV=$@
 
 FILE_ZSHRC="$HOME/.zshrc"
-FILE_ZSHRC_TXT="zshrc.txt"
+FILE_ZSHRC_TXT="tocopy.zshrc"
 FILE_VIMRC="$HOME/.vimrc"
 FILE_VIMRC_TXT="vimrc.txt"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
@@ -122,16 +122,13 @@ function git_config()
 	print_manager "✓ Git configured/overwritten!" green
 }
 
-#funzione che legge linea per linea il file FILE_ZSHRC_TXT e lo copia in FILE_ZSHRC, se la linea è presente nel file FILE_ZSHRC, non fa niente
+#copy the tocpy.zshrc file to the .zshrc file
 function copy_zsh()
 {
-	while read line; do
-		if grep -q "$line" $FILE_ZSHRC; then
-			print_manager "$line found! doing nothing..."
-		else
-			print_manager $line >> $FILE_ZSHRC
-		fi
-	done < $FILE_ZSHRC_TXT
+	#remove any previous .zshrc file
+	rm -rf $FILE_ZSHRC
+	cp $FILE_ZSHRC_TXT ~/.zshrc
+	print_manager "✓ .zshrc copied!" green
 }
 
 #funzione che legge linea per linea il file FILE_VIMRC_TXT e lo copia in FILE_VIMRC, se la linea è già presente, non fa niente
@@ -173,13 +170,14 @@ function check_zsh_autosuggestions()
 #it creates it using git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 function check_zsh_powerlevel10k()
 {
-	if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-		print_manager "✓ Powerlevel10k found! doing nothing..."
-	else
-		print_manager "powerlevel10k not found! Creating it..."
-		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-		print_manager "✓ Powerlevel10k created!" green
-	fi
+	# if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+	# 	print_manager "✓ Powerlevel10k found! doing nothing..."
+	# else
+	rm -rf ${HOME}/.oh-my-zsh/custom/themes/powerlevel10k
+	print_manager "powerlevel10k not found! Creating it..."
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+	print_manager "✓ Powerlevel10k created!" green
+	# fi
 }
 
 function set_fonts()
@@ -227,7 +225,9 @@ function check_zsh_theme()
 
 function set_p10k_config()
 {
-	cp $PWD/p10k_bck.zsh $P10K_CONFIG_FILE_PATH
+
+	rm -rf $HOME/.p10k.zsh
+	cp $PWD/tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
 	print_manager "cp $PWD/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
 	print_manager "✓ P10k configured / overwritten!" green
 }
@@ -279,5 +279,4 @@ check_zsh_theme
 check_vscode_font
 set_p10k_config
 check_p10k_configuration_wizard
-check_vscode_font
 finish

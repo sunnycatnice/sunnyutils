@@ -2,5 +2,6 @@
     "_comment" : "SunnyUpdate",
 	"terminal.integrated.fontFamily": "MesloLGS NF",
     "terminal.extern.linuxExec": "iterm2",
-    "editor.inlineSuggest.enabled": true
+    "editor.inlineSuggest.enabled": true,
+    "workbench.colorTheme": "Default High Contrast"
 }
