@@ -96,24 +96,6 @@ function check_vimrc()
 	fi
 }
 
-function check_brew()
-{
-	if [ -d "$HOME/goinfre/.test/.brew" ]; then
-		export PATH="$HOME/goinfre/.test/.brew/bin:$HOME/goinfre/.test/.brew/sbin:$PATH";
-		print_manager 'export PATH="/goinfre/dmangola/.test/.brew/bin:$PATH"' >> ~/.zshrc
-		print_manager "Brew path added to zshrc!"
-	else
-		git clone --depth=1 https://github.com/Homebrew/brew ~/goinfre/.test/.brew;
-		export PATH="$HOME/goinfre/.test/.brew/bin:$HOME/goinfre/.test/.brew/sbin:$PATH";
-		print_manager "✓ Brew successfully installed and exported!" green
-	fi
-
-	# if [ "$1" == "init-cask" ]; then
-	# 	print_manager "export HOMEBREW_CASK_OPTS=\"--appdir=~/goinfre/.Applications --caskroom=~/.goinfre/.test/.brew/Caskroom\"" >> ~/.zshrc
-	# 	print_manager "cask initialized!"
-	# fi
-}
-
 #function to change git config to use the default git config
 function git_config()
 {
@@ -216,7 +198,7 @@ function set_p10k_config()
 {
 
 	rm -rf $HOME/.p10k.zsh
-	cp $PWD/tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
+	cp tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
 	print_manager "cp $PWD/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
 	print_manager "✓ P10k configured / overwritten!" green
 }
@@ -238,13 +220,12 @@ function finish()
 	print_manager "zsh configured!"
 	# clear
 	print_manager "All done! Enjoy your new shell!" bold_green
-	# exec zsh
+	exec zsh
 }
 
 ascii_art
 check_argv $@
 set_fonts
-check_brew
 check_vimrc
 git_config
 download_ohmyzsh
