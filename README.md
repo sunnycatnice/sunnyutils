@@ -1,4 +1,4 @@
-# sunnyutils
+# SunnyUtils ☀️🐈‍⬛
 A useful SunnyCat kit to stop waisting time in configs
 
 ### Installation
