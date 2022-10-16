@@ -3,7 +3,7 @@ A useful SunnyCat kit to stop waisting time in configs
 
 ### Installation
 ```bash
-git clone https://github.com/sunnycatnice/sunnyutils $HOME && cd sunnyutils && chmod 755 ./srcs/install.sh && ./srcs/install.sh && cd ..
+cd $HOME && git clone https://github.com/sunnycatnice/sunnyutils && cd sunnyutils && chmod 755 ./srcs/install.zsh && ./srcs/install.zsh -s && cd ..
 ```
 
 And enjoy your configed env!

@@ -10,9 +10,9 @@ YELLOW='\033[0;33m'
 ARGV=$@
 
 FILE_ZSHRC="$HOME/.zshrc"
-FILE_ZSHRC_TOCOPY="tocopy.zshrc"
+FILE_ZSHRC_TOCOPY="./srcs/tocopy.zshrc"
 FILE_VIMRC="$HOME/.vimrc"
-FILE_VIMRC_TXT="vimrc.txt"
+FILE_VIMRC_TXT="./srcs/vimrc.txt"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
 VS_TERMINAL_CONFIG_PATH="$HOME/Library/Application Support/Code/User/settings.json"
 SILENT_MODE=false
@@ -149,17 +149,17 @@ function check_zsh_autosuggestions()
 }
 
 #function to check if zsh theme powerlevel10k is present, if not, it creates it
-#it creates it using git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+#it creates it using git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 function check_zsh_powerlevel10k()
 {
-	# if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-	# 	print_manager "✓ Powerlevel10k found! doing nothing..."
-	# else
-	rm -rf ${HOME}/.oh-my-zsh/custom/themes/powerlevel10k
-	print_manager "powerlevel10k not found! Creating it..."
-	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-	print_manager "✓ Powerlevel10k created!" green
-	# fi
+	if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+		print_manager "✓ Powerlevel10k found! doing nothing..."
+	else
+		rm -rf ${HOME}/.oh-my-zsh/custom/themes/powerlevel10k
+		print_manager "powerlevel10k not found! Creating it..."
+		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+		print_manager "✓ Powerlevel10k created!" green
+	fi
 }
 
 function set_fonts()
@@ -198,8 +198,8 @@ function set_p10k_config()
 {
 
 	rm -rf $HOME/.p10k.zsh
-	cp tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
-	print_manager "cp $PWD/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
+	cp ./srcs/tocopy_p10k.zsh $P10K_CONFIG_FILE_PATH
+	print_manager "cp ./srcs/p10k_bck.zsh  $P10K_CONFIG_FILE_PATH"
 	print_manager "✓ P10k configured / overwritten!" green
 }
 
@@ -207,7 +207,7 @@ function set_p10k_config()
 function check_vscode_font()
 {
 	#!/bin/bash
-	cp $PWD/vs_terminal_settings.json "$VS_TERMINAL_CONFIG_PATH"
+	cp ./srcs/vs_terminal_settings.json "$VS_TERMINAL_CONFIG_PATH"
 	print_manager "$PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH"
 	#!/bin/zsh
 }
