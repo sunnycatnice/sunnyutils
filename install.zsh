@@ -101,7 +101,7 @@ function git_config()
 	#save whoami in a variable
 	MYNAME=$(whoami)
 	git config --global user.name "${MYNAME}-MacOS"
-	git config --global user.email "myemail@gmail.com"
+	git config --global user.email "sio2guanoeleo@gmail.com"
 	print_manager "✓ Git configured/overwritten!" green
 }
 
