@@ -98,7 +98,9 @@ function check_vimrc()
 #function to change git config to use the default git config
 function git_config()
 {
-	git config --global user.name "$(whoami)-MacOS"
+	#save whoami in a variable
+	MYNAME=$(whoami)
+	git config --global user.name "${MYNAME}-MacOS"
 	git config --global user.email "youremail@gmail.com"
 	print_manager "✓ Git configured/overwritten!" green
 }
