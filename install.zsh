@@ -1,5 +1,4 @@
 #!/bin/bash
-#DO NOT RUN THIS SCRIPT DIRECTLY, RUN config.sh INSTEAD <-- STRONZATA
 
 GREEN='\033[0;32m'
 BOLD_GREEN='\033[1;32m'
@@ -99,8 +98,8 @@ function check_vimrc()
 #function to change git config to use the default git config
 function git_config()
 {
-	git config --global user.name "dani-MacOS"
-	git config --global user.email "sio2guanoeleo@gmail.com"
+	git config --global user.name "$(whoami)-MacOS"
+	git config --global user.email "youremail@gmail.com"
 	print_manager "✓ Git configured/overwritten!" green
 }
 
