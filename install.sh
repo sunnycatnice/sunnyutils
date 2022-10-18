@@ -273,4 +273,3 @@ else
 	# set_p10k_config --> to make it work for linx
 	finish
 fi
-
