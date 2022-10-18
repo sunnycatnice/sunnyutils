@@ -11,7 +11,7 @@ ARGV=$@
 FILE_ZSHRC="$HOME/.zshrc"
 FILE_ZSHRC_TOCOPY="./srcs/tocopy.zshrc"
 FILE_VIMRC="$HOME/.vimrc"
-FILE_VIMRC_TXT="./srcs/vimrc.txt"
+FILE_VIMRC_TXT="./srcs/vimrc.bck"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
 VS_TERMINAL_CONFIG_PATH="$HOME/Library/Application Support/Code/User/settings.json"
 SILENT_MODE=false
@@ -28,6 +28,7 @@ SILENT_MODE=false
 #if $3 exists, it means important mode is activated, so the message will be printed ignoring the silent mode
 function print_manager()
 {
+	#tofix the important mode - not working
 	#if $3 exists, it means important mode is activated, so the message will be printed ignoring the silent mode
 	if [ -n "$3" ]; then
 		if [ "$3" == "important" ] || [ "$3" == "i" ]; then
@@ -164,33 +165,42 @@ function check_zsh_powerlevel10k()
 
 function set_fonts()
 {
+	STATUS=0
 	#check in ~/Library/Fonts if MesloLGSNFBold.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFBold.ttf" ]; then
 		print_manager "MesloLGSNFBold.ttf found!"
 	else
-		print_manager "MesloLGSNFBold.ttf not found! Copying it..."
+		print_manager "MesloLGSNFBold.ttf not found! Copying it..." yellow
 		cp ./fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
+		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFBoldItalic.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf" ]; then
 		print_manager "MesloLGSNFBoldItalic.ttf found!"
 	else
-		print_manager "MesloLGSNFBoldItalic.ttf not found! Copying it..."
+		print_manager "MesloLGSNFBoldItalic.ttf not found! Copying it..." yellow
 		cp ./fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
+		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFItalic.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFItalic.ttf" ]; then
 		print_manager "MesloLGSNFItalic.ttf found!"
 	else
-		print_manager "MesloLGSNFItalic.ttf not found! Copying it..."
+		print_manager "MesloLGSNFItalic.ttf not found! Copying it..." yellow
 		cp ./fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
+		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFRegular.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFRegular.ttf" ]; then
 		print_manager "MesloLGSNFRegular.ttf found!"
 	else
-		print_manager "MesloLGSNFRegular.ttf not found! Copying it..."
+		print_manager "MesloLGSNFRegular.ttf not found! Copying it..." yellow
 		cp ./fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
+		STATUS = 1
+	fi
+	#check if STATUS is 1, if it is, it means that at least one font was copied, so it prints the message
+	if [ $STATUS -eq 1 ]; then
+		print_manager "! REMEMBER ! You need to restart your machine to see fonts changes" yellow
 	fi
 }
 
@@ -206,18 +216,31 @@ function set_p10k_config()
 #function to change the default font of vs code to MesloLGS NF
 function check_vscode_font()
 {
-	#!/bin/bash
 	cp ./srcs/vs_terminal_settings.json "$VS_TERMINAL_CONFIG_PATH"
 	print_manager "$PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH"
-	#!/bin/zsh
 }
 
 function finish()
 {
 	print_manager "zsh configured!"
-	# clear
+	#check if bash is the default shell
+	if [ "$SHELL" != "/bin/zsh" ]; then
+		print_manager "zsh is not the default shell! Changing it..."
+		#check if zsh exists
+		if [ -f "/bin/zsh" ]; then
+			print_manager "zsh found! Changing default shell..."
+			chsh -s /bin/zsh
+			print_manager "✓ zsh is now the default shell!" green
+		else
+			print_manager "zsh not found! Please install it and then run this script again!" red
+		fi
+		print_manager "! Remember to restart your terminal to see any effective changes!" yellow
+		exec bash
+	else
+		print_manager "zsh is already the default shell!"
+		exec zsh
+	fi
 	print_manager "All done! Enjoy your new shell!" bold_green
-	exec zsh
 }
 
 ascii_art
@@ -225,7 +248,7 @@ ascii_art
 if [ "$(uname)" == "Darwin" ]; then
     print_manager "You're on macOS! Great!" green
 	check_argv $@
-	set_fonts
+	set_fonts # macOS only
 	check_vimrc
 	git_config
 	download_ohmyzsh
