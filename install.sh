@@ -214,7 +214,6 @@ function check_vscode_font()
 
 function finish()
 {
-	print_manager ciao
 	print_manager "zsh configured!"
 	# clear
 	print_manager "All done! Enjoy your new shell!" bold_green
