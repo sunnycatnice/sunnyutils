@@ -5,7 +5,7 @@ Wrote entirely as a bash script, this tool intends to lightweight your work by i
 
 ### Installation
 ```bash
-cd $HOME && git clone https://github.com/sunnycatnice/sunnyutils && cd sunnyutils && chmod 755 ./install.sh ./clear.sh && ./install.zsh -s && cd ..
+cd $HOME && git clone https://github.com/sunnycatnice/sunnyutils && cd sunnyutils && chmod 755 ./*.sh ./clear.sh && ./install.zsh -s && cd ..
 ```
 
 It works on macOS and Linux too! Try it on your own.
