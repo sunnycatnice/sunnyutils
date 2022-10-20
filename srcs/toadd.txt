@@ -1,2 +1,4 @@
 -add to path every command from sunnyutils
 -install, cleaning and addkey
+-update readme on what the script exactly do
+-choose what to install with a switch case in install sh

@@ -4,43 +4,55 @@
 # Make sure to have zsh installed!
 # The key is passed as first argument or entered from stdin
 
+DJANGO_CHECK="django-"
+OPENAI_CHECK="sk-"
+
+function ask_to_add_key()
+{
+    echo -n "Please enter your Django or OpenAI secret key: "
+    read KEY
+    if [[ $KEY == $DJANGO_CHECK* ]]
+    then
+        KEY_TYPE=1
+        break
+    elif [[ $KEY == $OPENAI_CHECK* ]]
+    then
+        KEY_TYPE=2
+        break
+    else
+        echo "The key is not a Django key or an OpenAI key"
+    fi
+}
+
 # If $1 is empty, the script will ask for the key
 if [ -r $1 ]
 then
-    echo -n "Please enter your GENERIC secret key: "
-    read KEY
+    ask_to_add_key
 else
     KEY=$1
+    #if key starts with DJANGO_CHECK, it's a django key
+    #if key starts with OPENAI_CHECK, it's an openai key
+    if [[ $KEY == $DJANGO_CHECK* ]]
+    then
+        KEY_TYPE=1
+    elif [[ $KEY == $OPENAI_CHECK* ]]
+    then
+        KEY_TYPE=2
+    else
+        echo "The key is not a Django key or an OpenAI key"
+    fi
 fi
 
 DJANGO_KEY="DJANGO_KEY"
 OPENAI_KEY="OPENAI_API_KEY"
 
-DJANGO_CHECK="django-"
-OPENAI_CHECK="sk-"
-
-#ask a user if he wants to add a django key or an openai key
-echo "Do you want to add a Django key or an OpenAI key?"
-echo "1. Django key"
-echo "2. OpenAI key"
-echo -n "Please enter 1 or 2: "
-read KEY_TYPE
-echo "\n"
-
-#use a loop to ask for the key again if it is not valid
+# Loop to ask for the key again if it is not valid
 while [[ $KEY_TYPE != 1 && $KEY_TYPE != 2 ]]
 do
     #write that in red
     echo "\e[31mThe key type is not valid, please try again\e[0m"
-    echo "Do you want to add a Django key or an OpenAI key?"
-    echo "1. Django key"
-    echo "2. OpenAI key"
-    echo "   To exit, press Ctrl+C"
-    echo -n "Please enter 1 or 2: "
-    read KEY_TYPE
-    echo "\n"
+    ask_to_add_key
 done
-
 
 if [ $KEY_TYPE = "1" ]
 then
@@ -60,6 +72,22 @@ do
     read KEY
 done
 
+function backup_old_key()
+{
+    # Create a file called .old_keys in the home directory to store old keys
+    if [ ! -f ~/.old_keys ]
+    then
+        touch ~/.old_keys
+    fi
+    # Check if the key is already in the file
+    if ! grep -q $KEY ~/.old_keys
+    then
+        # If not, add it to the file
+        # echo a timestamp and the key
+        echo "[$(date)] $KEY_NAME = '$KEY'" >> ~/.old_keys
+    fi
+}
+
 function add_key ()
 {
     if ! grep -q $KEY_NAME $1; then
@@ -74,6 +102,7 @@ function add_key ()
         read CHANGE
         if [ $CHANGE = "y" ]
         then
+            backup_old_key
             #replace the key with the new one
             if [ $KEY_TYPE = "1" ]
             then
@@ -85,8 +114,8 @@ function add_key ()
             #echo with green color key changed!
             echo -e "\e[32mKey changed!\e[0m\n"
         else
-            #print with red color key not changed!
-            echo -e "\e[31mKey not changed!\e[0m\n"
+            #print with yellow color key not changed
+            echo -e "\e[33mKey not changed\e[0m\n"
         fi
     fi
 }
