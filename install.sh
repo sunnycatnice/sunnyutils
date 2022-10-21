@@ -166,6 +166,14 @@ function check_zsh_powerlevel10k()
 function set_fonts()
 {
 	STATUS=0
+	#check if Fonts folder already exists. If not, create it
+	if [ -d "$HOME/Library/Fonts" ]; then
+		print_manager "✓ Fonts folder found! doing nothing..."
+	else
+		print_manager "Fonts folder not found! Creating it..."
+		mkdir $HOME/Library/Fonts
+		print_manager "✓ Fonts folder created!" green
+	fi
 	#check in ~/Library/Fonts if MesloLGSNFBold.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFBold.ttf" ]; then
 		print_manager "MesloLGSNFBold.ttf found!"
@@ -241,6 +249,7 @@ function finish()
 		exec zsh
 	fi
 	print_manager "All done! Enjoy your new shell!" bold_green
+	print_manager "Make sure to reboot your PC for fonts to be displayed" green
 }
 
 ascii_art
