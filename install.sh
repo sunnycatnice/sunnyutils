@@ -171,7 +171,7 @@ function set_fonts()
 		print_manager "MesloLGSNFBold.ttf found!"
 	else
 		print_manager "MesloLGSNFBold.ttf not found! Copying it..." yellow
-		cp ./fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
+		cp ./srcs/fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
 		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFBoldItalic.ttf exists
@@ -179,7 +179,7 @@ function set_fonts()
 		print_manager "MesloLGSNFBoldItalic.ttf found!"
 	else
 		print_manager "MesloLGSNFBoldItalic.ttf not found! Copying it..." yellow
-		cp ./fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
+		cp ./srcs/fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
 		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFItalic.ttf exists
@@ -187,7 +187,7 @@ function set_fonts()
 		print_manager "MesloLGSNFItalic.ttf found!"
 	else
 		print_manager "MesloLGSNFItalic.ttf not found! Copying it..." yellow
-		cp ./fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
+		cp ./srcs/fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
 		STATUS = 1
 	fi
 	#check in ~/Library/Fonts if MesloLGSNFRegular.ttf exists
@@ -195,7 +195,7 @@ function set_fonts()
 		print_manager "MesloLGSNFRegular.ttf found!"
 	else
 		print_manager "MesloLGSNFRegular.ttf not found! Copying it..." yellow
-		cp ./fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
+		cp ./srcs/fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
 		STATUS = 1
 	fi
 	#check if STATUS is 1, if it is, it means that at least one font was copied, so it prints the message
