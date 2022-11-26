@@ -21,7 +21,7 @@ do
     echo "The MAC address is not valid, please try again"
     echo -n "Please enter your phone or any other valid MAC address on your network: "
     read VALIDMAC
-    sudo ifconfig en0 ether $VALIDMAC
+    sudo ifconfig en0 lladd $VALIDMAC
     #if this is looping more than 2 times, echo a message to switch off and on the wifi
     if [[ $i == 2 ]]
     then
