@@ -14,6 +14,7 @@ FILE_VIMRC="$HOME/.vimrc"
 FILE_VIMRC_TXT="./srcs/vimrc.bck"
 P10K_CONFIG_FILE_PATH="$HOME/.p10k.zsh"
 VS_TERMINAL_CONFIG_PATH="$HOME/Library/Application Support/Code/User/settings.json"
+VS_INSIDER_TERMINAL_CONFIG_PATH="$HOME/Library/Application Support/Code - Insiders/User/settings.json"
 SILENT_MODE=false
 
 #print_manager manage the printing process of every message displayed
@@ -110,7 +111,7 @@ function copy_zsh()
 {
 	#remove any previous .zshrc file
 	rm -rf $FILE_ZSHRC
-	cp $FILE_ZSHRC_TOCOPY ~/.zshrc
+	cp $FILE_ZSHRC_TOCOPY $HOME/.zshrc
 	print_manager "✓ .zshrc copied!" green
 }
 
@@ -136,15 +137,15 @@ function download_ohmyzsh()
 	fi
 }
 
-#funzione che controlla se ~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions è presente, se non lo è, lo crea
-#lo crea usando git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+#funzione che controlla se $HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions è presente, se non lo è, lo crea
+#lo crea usando git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 function check_zsh_autosuggestions()
 {
 	if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
 		print_manager "✓ zsh-autosuggestions found! doing nothing..."
 	else
 		print_manager "zsh-autosuggestions not found! Creating it..."
-		git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+		git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 		print_manager "✓ zsh-autosuggestions created!" green
 	fi
 }
@@ -166,44 +167,36 @@ function check_zsh_powerlevel10k()
 function set_fonts()
 {
 	STATUS=0
-	#check if Fonts folder already exists. If not, create it
-	if [ -d "$HOME/Library/Fonts" ]; then
-		print_manager "✓ Fonts folder found! doing nothing..."
-	else
-		print_manager "Fonts folder not found! Creating it..."
-		mkdir $HOME/Library/Fonts
-		print_manager "✓ Fonts folder created!" green
-	fi
-	#check in ~/Library/Fonts if MesloLGSNFBold.ttf exists
+	#check in $HOME/Library/Fonts if MesloLGSNFBold.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFBold.ttf" ]; then
 		print_manager "MesloLGSNFBold.ttf found!"
 	else
 		print_manager "MesloLGSNFBold.ttf not found! Copying it..." yellow
-		cp ./srcs/fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
+		cp ./fonts/MesloLGSNFBold.ttf $HOME/Library/Fonts/MesloLGSNFBold.ttf
 		STATUS = 1
 	fi
-	#check in ~/Library/Fonts if MesloLGSNFBoldItalic.ttf exists
+	#check in $HOME/Library/Fonts if MesloLGSNFBoldItalic.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf" ]; then
 		print_manager "MesloLGSNFBoldItalic.ttf found!"
 	else
 		print_manager "MesloLGSNFBoldItalic.ttf not found! Copying it..." yellow
-		cp ./srcs/fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
+		cp ./fonts/MesloLGSNFBoldItalic.ttf $HOME/Library/Fonts/MesloLGSNFBoldItalic.ttf
 		STATUS = 1
 	fi
-	#check in ~/Library/Fonts if MesloLGSNFItalic.ttf exists
+	#check in $HOME/Library/Fonts if MesloLGSNFItalic.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFItalic.ttf" ]; then
 		print_manager "MesloLGSNFItalic.ttf found!"
 	else
 		print_manager "MesloLGSNFItalic.ttf not found! Copying it..." yellow
-		cp ./srcs/fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
+		cp ./fonts/MesloLGSNFItalic.ttf $HOME/Library/Fonts/MesloLGSNFItalic.ttf
 		STATUS = 1
 	fi
-	#check in ~/Library/Fonts if MesloLGSNFRegular.ttf exists
+	#check in $HOME/Library/Fonts if MesloLGSNFRegular.ttf exists
 	if [ -f "$HOME/Library/Fonts/MesloLGSNFRegular.ttf" ]; then
 		print_manager "MesloLGSNFRegular.ttf found!"
 	else
 		print_manager "MesloLGSNFRegular.ttf not found! Copying it..." yellow
-		cp ./srcs/fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
+		cp ./fonts/MesloLGSNFRegular.ttf $HOME/Library/Fonts/MesloLGSNFRegular.ttf
 		STATUS = 1
 	fi
 	#check if STATUS is 1, if it is, it means that at least one font was copied, so it prints the message
@@ -225,7 +218,10 @@ function set_p10k_config()
 function check_vscode_font()
 {
 	cp ./srcs/vs_terminal_settings.json "$VS_TERMINAL_CONFIG_PATH"
+	cp ./srcs/vs_terminal_settings.json "$VS_INSIDER_TERMINAL_CONFIG_PATH"
 	print_manager "$PWD/vs_terminal_settings.json $VS_TERMINAL_CONFIG_PATH"
+	print_manager "$PWD/vs_terminal_settings.json $VS_INSIDER_TERMINAL_CONFIG_PATH"
+	print_manager "✓ VS Code font configured!" green
 }
 
 function finish()
@@ -249,7 +245,6 @@ function finish()
 		exec zsh
 	fi
 	print_manager "All done! Enjoy your new shell!" bold_green
-	print_manager "Make sure to reboot your PC for fonts to be displayed" green
 }
 
 ascii_art
